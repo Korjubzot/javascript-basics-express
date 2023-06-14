@@ -26,15 +26,19 @@ app.get('/strings/count/:string', (req, res) => {
   res.json({ result: countCharacters(req.params.string) });
 });
 
-app.get('/strings/first-characters/:string', (req, res) => {
-  res.json({ result: firstCharacter(req.params.string) });
-});
+// app.get('/strings/first-characters/:string', (req, res) => {
+//   res.json({ result: firstCharacter(req.params.string) });
+// });
 
 app.get('/strings/first-characters/:string', (req, res) => {
   const { string } = req.params;
   const { length } = req.query;
 
-  res.json({ result: firstCharacters(string, length) });
+  if (length === undefined) {
+    res.json({ result: firstCharacter(string) });
+  } else {
+    res.json({ result: firstCharacters(string, length) });
+  }
 });
 
 module.exports = app;
