@@ -113,4 +113,26 @@ app.post('/numbers/divide', (req, res) => {
   res.status(200).json({ result });
 });
 
+app.post('/numbers/remainder', (req, res) => {
+  const { a, b } = req.body;
+
+  if (b === 0) {
+    res.status(400).send({ error: 'Unable to divide by 0.' });
+  }
+
+  if (a === undefined || b === undefined) {
+    res.status(400).send({ error: 'Parameters "a" and "b" are required.' });
+  }
+
+  const numA = parseFloat(a);
+  const numB = parseFloat(b);
+
+  if (isNaN(numA) || isNaN(numB)) {
+    res.status(400).send({ error: 'Parameters must be valid numbers.' });
+  }
+
+  const result = remainder(numA, numB);
+  res.status(200).json({ result });
+});
+
 module.exports = app;
