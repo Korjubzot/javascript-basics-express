@@ -16,18 +16,37 @@ const {
   subtract,
   multiply,
   divide,
-  power,
-  round,
-  roundUp,
-  roundDown,
-  absolute,
-  quotient,
+  // power,
+  // round,
+  // roundUp,
+  // roundDown,
+  // absolute,
+  // quotient,
   remainder,
 } = require('./lib/numbers');
+
+const {
+  negate,
+  both,
+  either,
+  none,
+  one,
+  truthiness,
+  isEqual,
+  isGreaterThan,
+  isLessThanOrEqualTo,
+  isOdd,
+  isEven,
+  isSquare,
+  startsWith,
+  containsVowels,
+  isLowerCase,
+} = require('./lib/booleans');
 
 const app = express();
 app.use(express.json());
 
+// Strings
 app.get('/strings/hello/:string', (req, res) => {
   res.json({ result: sayHello(req.params.string) });
 });
@@ -55,6 +74,9 @@ app.get('/strings/first-characters/:string', (req, res) => {
   }
 });
 
+// Numbers
+
+// Addition
 app.get('/numbers/add/:a/and/:b', (req, res) => {
   const a = parseInt(req.params.a);
   const b = parseInt(req.params.b);
@@ -66,6 +88,7 @@ app.get('/numbers/add/:a/and/:b', (req, res) => {
   }
 });
 
+// Subtraction
 app.get('/numbers/subtract/:a/from/:b', (req, res) => {
   const a = parseFloat(req.params.a);
   const b = parseFloat(req.params.b);
@@ -77,6 +100,7 @@ app.get('/numbers/subtract/:a/from/:b', (req, res) => {
   }
 });
 
+// Multiply
 app.post('/numbers/multiply', (req, res) => {
   const { a, b } = req.body;
 
@@ -91,6 +115,7 @@ app.post('/numbers/multiply', (req, res) => {
   res.status(200).send({ result });
 });
 
+// Division
 app.post('/numbers/divide', (req, res) => {
   const { a, b } = req.body;
 
@@ -113,6 +138,7 @@ app.post('/numbers/divide', (req, res) => {
   res.status(200).json({ result });
 });
 
+// Remainder
 app.post('/numbers/remainder', (req, res) => {
   const { a, b } = req.body;
 
@@ -135,4 +161,23 @@ app.post('/numbers/remainder', (req, res) => {
   res.status(200).json({ result });
 });
 
+// Booleans
+
+app.post('/booleans/negate', (req, res) => {
+  const { value } = req.body;
+  res.json({ result: negate(value) });
+});
 module.exports = app;
+
+app.post('/booleans/truthiness', (req, res) => {
+  const { value } = req.body;
+  res.json({ result: truthiness(value) });
+});
+
+app.get('/booleans/is-odd/:number', (req, res) => {
+  if (isNaN(req.params.number)) {
+    res.status(400).json({ error: 'Parameter must be a number.' });
+  }
+
+  res.json({ result: isOdd(req.params.number) });
+});
