@@ -181,3 +181,11 @@ app.get('/booleans/is-odd/:number', (req, res) => {
 
   res.json({ result: isOdd(req.params.number) });
 });
+
+app.get('/booleans/:string/starts-with/:char', (req, res) => {
+  const { string, char } = req.params;
+  if (char.length > 1) {
+    res.status(400).json({ error: 'Parameter "character" must be a single character.' });
+  }
+  res.json({ result: startsWith(char, string) });
+});
