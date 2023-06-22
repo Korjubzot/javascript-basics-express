@@ -19,7 +19,7 @@ const addToArray2 = (element, array) => {
 };
 
 const removeNthElement = (index, array) => {
-  array.splice(index, 1);
+  return array.splice(index, 1);
 };
 
 const numbersToStrings = numbers => {
@@ -31,7 +31,12 @@ const uppercaseWordsInArray = strings => {
 };
 
 const reverseWordsInArray = strings => {
-  return strings.map(word => word.split('').reverse().join(''));
+  return strings.map(word =>
+    word
+      .split('')
+      .reverse()
+      .join(''),
+  );
 };
 
 const onlyEven = numbers => {
@@ -78,5 +83,5 @@ module.exports = {
   elementsStartingWithAVowel,
   removeSpaces,
   sumNumbers,
-  sortByLastLetter
+  sortByLastLetter,
 };

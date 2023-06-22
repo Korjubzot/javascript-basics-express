@@ -42,6 +42,16 @@ const {
   containsVowels,
   isLowerCase,
 } = require('./lib/booleans');
+const {
+  getNthElement,
+  arrayToCSVString,
+  csvStringToArray,
+  addToArray,
+  addToArray2,
+  elementsStartingWithAVowel,
+  removeNthElement,
+  removeNthElement2,
+} = require('./lib/arrays');
 
 const app = express();
 app.use(express.json());
@@ -188,4 +198,44 @@ app.get('/booleans/:string/starts-with/:char', (req, res) => {
     res.status(400).json({ error: 'Parameter "character" must be a single character.' });
   }
   res.json({ result: startsWith(char, string) });
+});
+
+app.post('/arrays/element-at-index/:index', (req, res) => {
+  const { index } = req.params;
+  const { array } = req.body;
+  res.json({ result: getNthElement(index, array) });
+});
+
+app.post('/arrays/to-string', (req, res) => {
+  const { array } = req.body;
+  res.json({ result: arrayToCSVString(array) });
+});
+
+app.post('/arrays/append', (req, res) => {
+  const { array, value } = req.body;
+  res.json({ result: addToArray2(value, array) });
+});
+
+app.post('/arrays/starts-with-vowel', (req, res) => {
+  const { array } = req.body;
+  res.json({ result: elementsStartingWithAVowel(array) });
+});
+
+// app.post('/arrays/remove-element', (req, res) => {
+//   const { array } = req.body;
+//   const index = 0;
+//   res.json({ result: removeNthElement2(index, array) });
+// });
+
+// Above code functions fine for one test but not another
+
+app.post('/arrays/remove-element', (req, res) => {
+  const { array } = req.body;
+  let index = 0;
+
+  if (req.query.index) {
+    index = parseInt(req.query.index);
+  }
+  const result = removeNthElement2(index, array);
+  res.json({ result });
 });
