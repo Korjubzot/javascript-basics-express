@@ -11,45 +11,14 @@ const {
   firstCharacters,
 } = require('./lib/strings');
 
-const {
-  add,
-  subtract,
-  multiply,
-  divide,
-  // power,
-  // round,
-  // roundUp,
-  // roundDown,
-  // absolute,
-  // quotient,
-  remainder,
-} = require('./lib/numbers');
+const { add, subtract, multiply, divide, remainder } = require('./lib/numbers');
 
-const {
-  negate,
-  both,
-  either,
-  none,
-  one,
-  truthiness,
-  isEqual,
-  isGreaterThan,
-  isLessThanOrEqualTo,
-  isOdd,
-  isEven,
-  isSquare,
-  startsWith,
-  containsVowels,
-  isLowerCase,
-} = require('./lib/booleans');
+const { negate, truthiness, isOdd, startsWith } = require('./lib/booleans');
 const {
   getNthElement,
   arrayToCSVString,
-  csvStringToArray,
-  addToArray,
   addToArray2,
   elementsStartingWithAVowel,
-  removeNthElement,
   removeNthElement2,
 } = require('./lib/arrays');
 
@@ -57,6 +26,7 @@ const app = express();
 app.use(express.json());
 
 // Strings
+
 app.get('/strings/hello/:string', (req, res) => {
   res.json({ result: sayHello(req.params.string) });
 });
@@ -84,9 +54,8 @@ app.get('/strings/first-characters/:string', (req, res) => {
   }
 });
 
-// Numbers
-
 // Addition
+
 app.get('/numbers/add/:a/and/:b', (req, res) => {
   const a = parseInt(req.params.a);
   const b = parseInt(req.params.b);
@@ -99,6 +68,7 @@ app.get('/numbers/add/:a/and/:b', (req, res) => {
 });
 
 // Subtraction
+
 app.get('/numbers/subtract/:a/from/:b', (req, res) => {
   const a = parseFloat(req.params.a);
   const b = parseFloat(req.params.b);
@@ -111,6 +81,7 @@ app.get('/numbers/subtract/:a/from/:b', (req, res) => {
 });
 
 // Multiply
+
 app.post('/numbers/multiply', (req, res) => {
   const { a, b } = req.body;
 
@@ -126,6 +97,7 @@ app.post('/numbers/multiply', (req, res) => {
 });
 
 // Division
+
 app.post('/numbers/divide', (req, res) => {
   const { a, b } = req.body;
 
@@ -149,6 +121,7 @@ app.post('/numbers/divide', (req, res) => {
 });
 
 // Remainder
+
 app.post('/numbers/remainder', (req, res) => {
   const { a, b } = req.body;
 
@@ -220,14 +193,6 @@ app.post('/arrays/starts-with-vowel', (req, res) => {
   const { array } = req.body;
   res.json({ result: elementsStartingWithAVowel(array) });
 });
-
-// app.post('/arrays/remove-element', (req, res) => {
-//   const { array } = req.body;
-//   const index = 0;
-//   res.json({ result: removeNthElement2(index, array) });
-// });
-
-// Above code functions fine for one test but not another
 
 app.post('/arrays/remove-element', (req, res) => {
   const { array } = req.body;
